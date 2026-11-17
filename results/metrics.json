@@ -1,0 +1,123 @@
+{
+  "dataset": "MovieLens 1M",
+  "data_audit": {
+    "users": 6040,
+    "movies": 3883,
+    "ratings": 1000209
+  },
+  "split": {
+    "train": {
+      "ratings": 799076,
+      "users": 6040
+    },
+    "validation": {
+      "ratings": 100613,
+      "users": 6039
+    },
+    "test": {
+      "ratings": 100520,
+      "users": 6040
+    }
+  },
+  "split_user_coverage": {
+    "users_per_partition": {
+      "train": 6040,
+      "validation": 6039,
+      "test": 6040
+    },
+    "users_without_validation": 1,
+    "users_without_test": 0
+  },
+  "timestamp_ties_split_across_partitions": {
+    "users_affected": 0,
+    "rating_records_affected": 0,
+    "timestamp_tie_groups_crossing_partitions": 0
+  },
+  "model": {
+    "name": "regularized user-movie bias",
+    "global_mean_training_only": 3.6170439357457864,
+    "lambda_user": 5.0,
+    "lambda_movie": 5.0,
+    "iterations": 15,
+    "selection_metric": "validation MAE",
+    "validation_interactions": 100613
+  },
+  "rating_prediction_test": {
+    "test_interactions": 100520,
+    "users_evaluated": 6040,
+    "mae": 0.7305671516988925,
+    "rmse": 0.9293385086467822
+  },
+  "ranking_test": {
+    "restricted_test_candidate_ranking": {
+      "precision_at_10": 0.48235099337748344,
+      "recall_at_10": 0.8001329563076085,
+      "ndcg_at_10": 0.8352199957757072,
+      "users_for_precision": 6040,
+      "users_for_recall_and_ndcg": 5768,
+      "users_excluded_no_relevant_test_items": 272,
+      "precision_at_10_definition": "relevant recommendations in top 10 divided by 10; missing positions count as non-relevant",
+      "users_with_fewer_than_10_candidates": 2991
+    },
+    "full_eligible_catalogue_ranking": {
+      "precision_at_10": 0.014403973509933774,
+      "recall_at_10": 0.016513454187369856,
+      "ndcg_at_10": 0.016644953908983864,
+      "users_for_precision": 6040,
+      "users_for_recall_and_ndcg": 5768,
+      "users_excluded_no_relevant_test_items": 272,
+      "precision_at_10_definition": "relevant recommendations in top 10 divided by 10",
+      "users_excluded_insufficient_catalogue_candidates": 0
+    }
+  },
+  "eligibility": {
+    "users_total": 6040,
+    "rating_prediction": 6040,
+    "ranking": 5768,
+    "full_catalogue_recommendation": 6040,
+    "sample_rating_prediction_user_ids": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "sample_full_catalogue_user_ids": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ]
+  }
+}

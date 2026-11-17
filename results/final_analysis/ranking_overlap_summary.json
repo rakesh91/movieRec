@@ -1,0 +1,23 @@
+{
+  "users_compared": 6039,
+  "identical_top10_users": 0,
+  "mean_shared_top10": 0.05298890544792184,
+  "median_shared_top10": 0.0,
+  "mean_overlap_fraction_of_10": 0.005298890544792184,
+  "mean_jaccard": 0.002809225414919979,
+  "low_overlap_definition": "at most 2 shared movies out of 10",
+  "low_overlap_users": 6039,
+  "high_overlap_definition": "at least 8 shared movies out of 10",
+  "high_overlap_users": 0,
+  "mean_spearman_all_common_candidates": 0.12954487525873506,
+  "median_spearman_all_common_candidates": 0.16965073245345685,
+  "users_with_defined_rank_correlation": 6039,
+  "candidate_catalogue_identical": true,
+  "tie_break": "ascending movie_id",
+  "zero_overlap_users": 5740,
+  "overlap_count_distribution": {
+    "0": 5740,
+    "1": 278,
+    "2": 21
+  }
+}

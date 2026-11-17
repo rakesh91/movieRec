@@ -1,0 +1,50 @@
+{
+  "chronological": {
+    "validation": {
+      "precision_at_10": 0.015631727107136943,
+      "recall_at_10": 0.01700782424903529,
+      "ndcg_at_10": 0.016834618413494016,
+      "users_evaluated": 6039,
+      "users_excluded_zero_relevant": 263,
+      "candidates_tied_at_5": 0,
+      "top10_slots_tied_at_5": 0,
+      "users_with_candidate_ties_at_5": 0,
+      "users_with_top10_ties_at_5": 0
+    },
+    "test": {
+      "precision_at_10": 0.014172185430463578,
+      "recall_at_10": 0.016282079989446925,
+      "ndcg_at_10": 0.015871382348127294,
+      "users_evaluated": 6040,
+      "users_excluded_zero_relevant": 272,
+      "candidates_tied_at_5": 0,
+      "top10_slots_tied_at_5": 0,
+      "users_with_candidate_ties_at_5": 0,
+      "users_with_top10_ties_at_5": 0
+    }
+  },
+  "random": {
+    "validation": {
+      "precision_at_10": 0.023758278145695363,
+      "recall_at_10": 0.027853905135399686,
+      "ndcg_at_10": 0.025945411590464214,
+      "users_evaluated": 6040,
+      "users_excluded_zero_relevant": 193,
+      "candidates_tied_at_5": 0,
+      "top10_slots_tied_at_5": 0,
+      "users_with_candidate_ties_at_5": 0,
+      "users_with_top10_ties_at_5": 0
+    },
+    "test": {
+      "precision_at_10": 0.024933774834437084,
+      "recall_at_10": 0.028391018107670724,
+      "ndcg_at_10": 0.026530636806638645,
+      "users_evaluated": 6040,
+      "users_excluded_zero_relevant": 76,
+      "candidates_tied_at_5": 0,
+      "top10_slots_tied_at_5": 0,
+      "users_with_candidate_ties_at_5": 0,
+      "users_with_top10_ties_at_5": 0
+    }
+  }
+}

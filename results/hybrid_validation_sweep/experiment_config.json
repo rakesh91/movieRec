@@ -1,0 +1,119 @@
+{
+  "experiment": "validation-only MF B + genre hybrid alpha sweep",
+  "primary_method": "per-user population z-score normalization then weighted addition",
+  "primary_formula": "hybrid(u,m)=alpha*((mf(u,m)-mean_u(mf))/max(std_u(mf),1e-8))+(1-alpha)*((genre(u,m)-mean_u(genre))/max(std_u(genre),1e-8))",
+  "variance_floor": {
+    "quantity": "population standard deviation",
+    "value": 1e-08,
+    "handling": "use max(user_score_std, 1e-8) as denominator; centered scores remain finite and order-preserving at alpha endpoints",
+    "users_below_floor": {
+      "mf": 0,
+      "genre": 0
+    }
+  },
+  "secondary_method": {
+    "name": "rank_fusion",
+    "definition": "per model, rank candidates by descending base score then ascending movie_id; convert zero-based position j to 1-j/(n_candidates-1); combine alpha*mf_rank_score+(1-alpha)*genre_rank_score",
+    "n_candidates_one_case": "rank score is 1.0 when denominator is max(1,n-1)"
+  },
+  "alphas": [
+    0.0,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    1.0
+  ],
+  "alpha_weights": "alpha is MF B weight; (1-alpha) is genre weight",
+  "ranking_cutoff": 10,
+  "relevance_threshold": "rating >= 4",
+  "precision_definition": "relevant top-10 items divided by fixed denominator 10",
+  "recall_definition": "hits@10 divided by number of distinct relevant validation movies",
+  "ndcg_definition": "binary gain, log2(rank+1) discount; ideal DCG from min(relevant_count,10)",
+  "zero_relevant_users": "included in Precision; excluded from Recall and NDCG",
+  "candidate_definition": "all movie catalogue IDs except movies rated by the user in the training partition",
+  "validation_labels_used_only_for_metrics": true,
+  "test_ratings_or_metrics_used": false,
+  "mf_checkpoint": "C:\\Users\\krupa\\OneDrive\\Desktop\\IIT_GN\\1st_sem\\ML\\movieRec\\results\\regularization_sensitivity\\B_entity_level\\model_checkpoint.npz",
+  "mf_configuration": {
+    "formulation": "B_entity_level",
+    "n_factors": 50,
+    "regularization": 0.1,
+    "learning_rate": 0.01,
+    "random_seed": 42,
+    "selected_epoch": 11
+  },
+  "genre_checkpoint": "C:\\Users\\krupa\\OneDrive\\Desktop\\IIT_GN\\1st_sem\\ML\\movieRec\\results\\genre_based\\model_checkpoint.npz",
+  "locked_split_sha256": "f6f5f45d8d4bb8cdebb5e1559537b4e8d32e1f455c650e0f7ad989e693093538",
+  "validation_users": 6039,
+  "validation_interactions": 100613,
+  "candidate_count_summary": {
+    "minimum": 2031,
+    "median": 3807.0,
+    "mean": 3750.6823977479717,
+    "maximum": 3878
+  },
+  "baseline_endpoint_parity": {
+    "per_user_z_score_alpha_0.0": {
+      "baseline": "genre",
+      "metrics_match": true,
+      "baseline_metrics": {
+        "precision_at_10": 0.007584037092233814,
+        "recall_at_10": 0.012127447097272478,
+        "ndcg_at_10": 0.011452861245515157
+      },
+      "sweep_metrics": {
+        "precision_at_10": 0.007584037092233814,
+        "recall_at_10": 0.012127447097272478,
+        "ndcg_at_10": 0.011452861245515157
+      }
+    },
+    "per_user_z_score_alpha_1.0": {
+      "baseline": "mf",
+      "metrics_match": true,
+      "baseline_metrics": {
+        "precision_at_10": 0.03426063917867196,
+        "recall_at_10": 0.03767803524593446,
+        "ndcg_at_10": 0.045669940510214606
+      },
+      "sweep_metrics": {
+        "precision_at_10": 0.03426063917867196,
+        "recall_at_10": 0.03767803524593446,
+        "ndcg_at_10": 0.045669940510214606
+      }
+    },
+    "rank_fusion_alpha_0.0": {
+      "baseline": "genre",
+      "metrics_match": true,
+      "baseline_metrics": {
+        "precision_at_10": 0.007584037092233814,
+        "recall_at_10": 0.012127447097272478,
+        "ndcg_at_10": 0.011452861245515157
+      },
+      "sweep_metrics": {
+        "precision_at_10": 0.007584037092233814,
+        "recall_at_10": 0.012127447097272478,
+        "ndcg_at_10": 0.011452861245515157
+      }
+    },
+    "rank_fusion_alpha_1.0": {
+      "baseline": "mf",
+      "metrics_match": true,
+      "baseline_metrics": {
+        "precision_at_10": 0.03426063917867196,
+        "recall_at_10": 0.03767803524593446,
+        "ndcg_at_10": 0.045669940510214606
+      },
+      "sweep_metrics": {
+        "precision_at_10": 0.03426063917867196,
+        "recall_at_10": 0.03767803524593446,
+        "ndcg_at_10": 0.045669940510214606
+      }
+    }
+  }
+}

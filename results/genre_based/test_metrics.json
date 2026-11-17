@@ -1,0 +1,21 @@
+{
+  "partition": "test",
+  "k": 10,
+  "relevance_threshold": 4,
+  "precision_definition": "relevant recommendations in top 10 divided by 10",
+  "candidate_definition": "all catalogue movies excluding that user's training-rated movies",
+  "users_for_precision": 6040,
+  "users_for_recall_and_ndcg": 5768,
+  "users_excluded_no_relevant_items": 272,
+  "users_with_fewer_than_10_candidates": 0,
+  "candidate_movies_per_user": {
+    "minimum": 2031,
+    "median": 3807.0,
+    "mean": 3750.7026490066223,
+    "maximum": 3878
+  },
+  "precision_at_10": 0.0058609271523178815,
+  "recall_at_10": 0.009884081103529245,
+  "ndcg_at_10": 0.00852135578839063,
+  "target_interactions": 100520
+}

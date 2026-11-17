@@ -1,0 +1,21 @@
+{
+  "randomized_split_sha256": "0446afd053607c6c2a73eb9d37816bb7a500e3a94c4981745d6486cee993bbc9",
+  "split_assignments_rows": 1000209,
+  "split_partition_counts": {
+    "train": 797758,
+    "validation": 97383,
+    "test": 105068
+  },
+  "split_user_partition_minimums": {
+    "train": 16,
+    "validation": 2,
+    "test": 2
+  },
+  "chronological_order_used_for_split": false,
+  "existing_results_before_match_after": true,
+  "changed_existing_results": [],
+  "mf_checkpoints_created_only_in_new_output": true,
+  "genre_checkpoint_created_only_in_new_output": true,
+  "hybrid_test_evaluated": false,
+  "test_used_for_model_selection": false
+}

@@ -1,0 +1,5 @@
+split,clipped,ndcg_at_10,candidates_tied_at_5,top10_slots_tied_at_5
+chronological,True,0.03958650630359143,37094,13016
+chronological,False,0.03955461554000446,0,0
+random,True,0.06793338659114663,32640,13237
+random,False,0.0681231220993611,0,0

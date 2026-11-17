@@ -1,0 +1,92 @@
+{
+  "split_sha256_before": "f6f5f45d8d4bb8cdebb5e1559537b4e8d32e1f455c650e0f7ad989e693093538",
+  "split_sha256_after": "f6f5f45d8d4bb8cdebb5e1559537b4e8d32e1f455c650e0f7ad989e693093538",
+  "split_unchanged": true,
+  "mf_checkpoint_sha256_before": "5764e3a8c7793cdb5fdde7c3b873076435284bae154e862c32a49d5f7ab7c4b8",
+  "mf_checkpoint_sha256_after": "5764e3a8c7793cdb5fdde7c3b873076435284bae154e862c32a49d5f7ab7c4b8",
+  "mf_checkpoint_unchanged": true,
+  "genre_checkpoint_sha256_before": "56544da63c93608ae0475cb22590833687d7ff4194c7675194cd8a4ca9a57b83",
+  "genre_checkpoint_sha256_after": "56544da63c93608ae0475cb22590833687d7ff4194c7675194cd8a4ca9a57b83",
+  "genre_checkpoint_unchanged": true,
+  "existing_results_count_before": 95,
+  "existing_results_unchanged": true,
+  "changed_existing_result_paths": [],
+  "source_training_rows_read": 799076,
+  "validation_label_rows_read_after_scoring": 100613,
+  "test_rating_values_parsed": false,
+  "test_metrics_accessed": false,
+  "models_trained": false,
+  "all_scores_finite": true,
+  "same_candidate_counts_for_every_method_and_alpha": true,
+  "evaluated_users_consistent_for_every_method_and_alpha": true,
+  "candidate_movies_per_user": {
+    "minimum": 2031,
+    "median": 3807.0,
+    "mean": 3750.6823977479717,
+    "maximum": 3878
+  },
+  "standalone_ranking_endpoint_checks": {
+    "z_score_alpha_0_equals_genre": true,
+    "z_score_alpha_1_equals_mf": true,
+    "rank_fusion_alpha_0_equals_genre": true,
+    "rank_fusion_alpha_1_equals_mf": true
+  },
+  "standalone_validation_metric_checks": {
+    "per_user_z_score_alpha_0.0": {
+      "baseline": "genre",
+      "metrics_match": true,
+      "baseline_metrics": {
+        "precision_at_10": 0.007584037092233814,
+        "recall_at_10": 0.012127447097272478,
+        "ndcg_at_10": 0.011452861245515157
+      },
+      "sweep_metrics": {
+        "precision_at_10": 0.007584037092233814,
+        "recall_at_10": 0.012127447097272478,
+        "ndcg_at_10": 0.011452861245515157
+      }
+    },
+    "per_user_z_score_alpha_1.0": {
+      "baseline": "mf",
+      "metrics_match": true,
+      "baseline_metrics": {
+        "precision_at_10": 0.03426063917867196,
+        "recall_at_10": 0.03767803524593446,
+        "ndcg_at_10": 0.045669940510214606
+      },
+      "sweep_metrics": {
+        "precision_at_10": 0.03426063917867196,
+        "recall_at_10": 0.03767803524593446,
+        "ndcg_at_10": 0.045669940510214606
+      }
+    },
+    "rank_fusion_alpha_0.0": {
+      "baseline": "genre",
+      "metrics_match": true,
+      "baseline_metrics": {
+        "precision_at_10": 0.007584037092233814,
+        "recall_at_10": 0.012127447097272478,
+        "ndcg_at_10": 0.011452861245515157
+      },
+      "sweep_metrics": {
+        "precision_at_10": 0.007584037092233814,
+        "recall_at_10": 0.012127447097272478,
+        "ndcg_at_10": 0.011452861245515157
+      }
+    },
+    "rank_fusion_alpha_1.0": {
+      "baseline": "mf",
+      "metrics_match": true,
+      "baseline_metrics": {
+        "precision_at_10": 0.03426063917867196,
+        "recall_at_10": 0.03767803524593446,
+        "ndcg_at_10": 0.045669940510214606
+      },
+      "sweep_metrics": {
+        "precision_at_10": 0.03426063917867196,
+        "recall_at_10": 0.03767803524593446,
+        "ndcg_at_10": 0.045669940510214606
+      }
+    }
+  }
+}

@@ -1,0 +1,218 @@
+{
+  "experiment": "random per-user 80/10/10 MovieLens split",
+  "split_method": "Within each user, shuffle rating-row positions using NumPy default_rng(seed=42); assign floor(0.8*n) to train, floor(0.1*n) to validation, remainder to test. Timestamps are not used to order or assign rows.",
+  "seed": 42,
+  "split_sha256": "0446afd053607c6c2a73eb9d37816bb7a500e3a94c4981745d6486cee993bbc9",
+  "split_counts": {
+    "train": {
+      "ratings": 797758,
+      "users": 6040
+    },
+    "validation": {
+      "ratings": 97383,
+      "users": 6040
+    },
+    "test": {
+      "ratings": 105068,
+      "users": 6040
+    }
+  },
+  "source_row_count": 1000209,
+  "user_count": 6040,
+  "movies_count": 3883,
+  "per_user_min_partition_counts": {
+    "train": 16,
+    "validation": 2,
+    "test": 2
+  },
+  "candidate_definition": "full movie catalogue excluding that user's training-rated movies",
+  "relevance_threshold": "rating >= 4",
+  "precision_denominator": 10,
+  "zero_relevant_users": "included in Precision; excluded from Recall and NDCG",
+  "tie_break": "descending score, then ascending movie_id",
+  "test_used_for_tuning_or_selection": false,
+  "chronological_order_used_for_split": false,
+  "known_interpretation_change": "Random per-user holdout evaluates held-out preference prediction, not future recommendation; training may contain ratings later than validation/test timestamps.",
+  "selected_mf_b": {
+    "checkpoint": "model_checkpoint.npz",
+    "global_mean_training_only": 3.580455476472815,
+    "n_factors": 50,
+    "regularization": 0.1,
+    "learning_rate": 0.01,
+    "random_seed": 42,
+    "batch_size": 8192,
+    "selected_epoch": 10,
+    "epochs_trained": 14,
+    "validation_mae": 0.6787959499593098,
+    "validation_rmse": 0.8644270525437796,
+    "max_epochs": 30,
+    "early_stopping_patience": 4,
+    "formulation": "B_entity_level",
+    "selection_metric": "validation RMSE",
+    "test_used_for_selection": false,
+    "randomized_split_sha256": "0446afd053607c6c2a73eb9d37816bb7a500e3a94c4981745d6486cee993bbc9"
+  },
+  "selected_mf_a": {
+    "checkpoint": "model_checkpoint.npz",
+    "global_mean_training_only": 3.580455476472815,
+    "n_factors": 50,
+    "regularization": 0.05,
+    "learning_rate": 0.01,
+    "random_seed": 42,
+    "batch_size": 8192,
+    "selected_epoch": 24,
+    "epochs_trained": 28,
+    "validation_mae": 0.6678512042351739,
+    "validation_rmse": 0.849333811265714,
+    "max_epochs": 30,
+    "early_stopping_patience": 4,
+    "formulation": "A_interaction_weighted",
+    "selection_metric": "validation RMSE",
+    "test_used_for_selection": false,
+    "randomized_split_sha256": "0446afd053607c6c2a73eb9d37816bb7a500e3a94c4981745d6486cee993bbc9"
+  },
+  "hybrid": {
+    "formula": "alpha * per-user MF B z-score + (1-alpha) * per-user genre z-score",
+    "alpha_grid": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "population_std_floor": 1e-08,
+    "validation_best_alpha": 0.8,
+    "validation_best_ndcg_at_10": 0.07891016120288978,
+    "test_evaluation_performed_for_hybrid": false
+  },
+  "validation_full_catalogue_metrics": [
+    {
+      "model": "Bias",
+      "precision_at_10": 0.02423841059602649,
+      "recall_at_10": 0.02840282811380011,
+      "ndcg_at_10": 0.027185704627075997,
+      "users_evaluated": 6040,
+      "users_excluded_zero_relevant": 193,
+      "candidate_count_summary": {
+        "minimum": 2032,
+        "median": 3807.0,
+        "mean": 3750.9208609271523,
+        "maximum": 3867
+      }
+    },
+    {
+      "model": "MF A",
+      "precision_at_10": 0.037334437086092714,
+      "recall_at_10": 0.04390709724711652,
+      "ndcg_at_10": 0.05021813020392768,
+      "users_evaluated": 6040,
+      "users_excluded_zero_relevant": 193,
+      "candidate_count_summary": {
+        "minimum": 2032,
+        "median": 3807.0,
+        "mean": 3750.9208609271523,
+        "maximum": 3867
+      }
+    },
+    {
+      "model": "MF B",
+      "precision_at_10": 0.05283112582781457,
+      "recall_at_10": 0.060027812481266096,
+      "ndcg_at_10": 0.07374704951422217,
+      "users_evaluated": 6040,
+      "users_excluded_zero_relevant": 193,
+      "candidate_count_summary": {
+        "minimum": 2032,
+        "median": 3807.0,
+        "mean": 3750.9208609271523,
+        "maximum": 3867
+      }
+    },
+    {
+      "model": "Genre",
+      "precision_at_10": 0.009288079470198676,
+      "recall_at_10": 0.012649823792316368,
+      "ndcg_at_10": 0.01292030053667521,
+      "users_evaluated": 6040,
+      "users_excluded_zero_relevant": 193,
+      "candidate_count_summary": {
+        "minimum": 2032,
+        "median": 3807.0,
+        "mean": 3750.9208609271523,
+        "maximum": 3867
+      }
+    }
+  ],
+  "test_full_catalogue_metrics": [
+    {
+      "model": "Bias",
+      "precision_at_10": 0.02533112582781457,
+      "recall_at_10": 0.028797052397821606,
+      "ndcg_at_10": 0.02756391958641592,
+      "users_for_precision": 6040,
+      "users_for_recall_and_ndcg": 5964,
+      "users_excluded_no_relevant_test_items": 76,
+      "precision_at_10_definition": "relevant recommendations in top 10 divided by 10",
+      "users_excluded_insufficient_catalogue_candidates": 0,
+      "rating_rmse": 0.9076505066865975
+    },
+    {
+      "model": "MF A",
+      "precision_at_10": 0.038857615894039736,
+      "recall_at_10": 0.04400480172205912,
+      "ndcg_at_10": 0.05095682961338051,
+      "users_for_precision": 6040,
+      "users_for_recall_and_ndcg": 5964,
+      "users_excluded_no_relevant_test_items": 76,
+      "precision_at_10_definition": "relevant recommendations in top 10 divided by 10",
+      "users_excluded_insufficient_catalogue_candidates": 0,
+      "rating_rmse": 0.8542193232596546
+    },
+    {
+      "model": "MF B",
+      "precision_at_10": 0.05567880794701987,
+      "recall_at_10": 0.05920188285502006,
+      "ndcg_at_10": 0.07443714672347118,
+      "users_for_precision": 6040,
+      "users_for_recall_and_ndcg": 5964,
+      "users_excluded_no_relevant_test_items": 76,
+      "precision_at_10_definition": "relevant recommendations in top 10 divided by 10",
+      "users_excluded_insufficient_catalogue_candidates": 0,
+      "rating_rmse": 0.8706180196600808
+    },
+    {
+      "model": "Genre",
+      "precision_at_10": 0.010364238410596027,
+      "recall_at_10": 0.014196279494883357,
+      "ndcg_at_10": 0.014458775709888428,
+      "users_evaluated": 6040,
+      "users_excluded_zero_relevant": 76,
+      "candidate_count_summary": {
+        "minimum": 2032,
+        "median": 3807.0,
+        "mean": 3750.9208609271523,
+        "maximum": 3867
+      },
+      "rating_rmse": null
+    }
+  ],
+  "baseline_validation_rating_prediction": {
+    "test_interactions": 97383,
+    "users_evaluated": 6040,
+    "mae": 0.7137846383576162,
+    "rmse": 0.9034764809182507
+  },
+  "baseline_test_rating_prediction": {
+    "test_interactions": 105068,
+    "users_evaluated": 6040,
+    "mae": 0.7169291161691539,
+    "rmse": 0.9076505066865975
+  },
+  "existing_results_unchanged": null
+}
