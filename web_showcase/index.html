@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <meta name="description" content="Explore MovieLens recommendation models, recommendations, and evaluation results.">
+  <title>MovieLens Recommendation Lab</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="MovieLens Recommendation Lab home">
+      <span class="brand-mark" aria-hidden="true">M</span>
+      <span>MOVIE <b>RECOMMENDATIONS</b></span>
+    </a>
+    <span class="topbar-note">ES 678 · MovieLens 1M</span>
+  </header>
+
+  <main id="top">
+    <section class="intro-strip" aria-label="About this project">
+      <p class="eyebrow">MOVIELENS 1M · ES 678 RESEARCH PROJECT</p>
+      <h1>Movie recommendations, compared.</h1>
+      <p>Compare five ranking methods for the same user under chronological and random holdout splits.</p>
+    </section>
+
+    <section class="section-block" id="explorer">
+      <div class="section-heading">
+        <div><p class="eyebrow">RECOMMENDATION COMPARISON</p><h2>Same user. Two evaluation splits.</h2></div>
+        <p class="section-aside">Top ten per method. Score is followed by the held-out rating (or “unrated”). Score scales vary by method.</p>
+      </div>
+      <div class="control-panel">
+        <label>Held-out partition shown
+          <select id="partition-select">
+            <option value="validation">Validation</option>
+            <option value="test">Test</option>
+          </select>
+        </label>
+        <label class="user-control">User ID
+          <input id="user-search" list="user-options" inputmode="numeric" placeholder="Choose a user" autocomplete="off">
+          <datalist id="user-options"></datalist>
+        </label>
+        <button id="random-user" class="button-secondary" type="button">Random user <span aria-hidden="true">↗</span></button>
+      </div>
+      <div id="partition-notice" class="notice" role="status"></div>
+      <div id="user-summary" class="user-summary" aria-live="polite"></div>
+      <div id="recommendation-grid" class="recommendation-grid" aria-live="polite"></div>
+      <details class="methods-details">
+        <summary>What each method does (paper methods)</summary>
+        <div class="method-explain-grid">
+          <article><h3>Regularized bias baseline</h3><p>Predicts the training mean plus user and movie rating biases. It captures general rating tendencies, but has no user–movie interaction factors.</p></article>
+          <article><h3>MF A · interaction-weighted regularization</h3><p>Biased matrix factorization: a user and movie each have latent vectors. In each mini-batch, an entity’s L2 penalty is applied once per rating interaction, so frequent entities receive more penalty. The saved setting used 50 factors, λ=0.05, and epoch 22.</p></article>
+          <article><h3>MF B · entity-level regularization</h3><p>Uses the same biased factorization and training objective, but applies each user/movie penalty once per mini-batch, not once per interaction. The RMSE-selected saved setting used 50 factors, λ=0.1, and epoch 11. Popularity is stronger on full-catalogue test NDCG; the A/B gap cannot be attributed to regularization alone.</p></article>
+          <article><h3>Genre profile</h3><p>Builds a multi-hot genre profile from training ratings only, weighting each movie by its rating minus the training mean; ranks candidates by cosine similarity.</p></article>
+          <article><h3>Hybrid · validation-selected</h3><p>Standardizes MF B and genre scores per user across eligible movies, then combines them with weight α. Validation selected α=1.0 chronologically and α=0.8 on the random split; each frozen hybrid was then evaluated once on test.</p></article>
+        </div>
+        <p class="method-score-note">Model scores are on different scales (rating, cosine similarity, or z-score); compare rankings, not the raw score magnitudes across methods.</p>
+      </details>
+    </section>
+
+    <section class="section-block charts-section">
+      <div class="section-heading">
+        <div><p class="eyebrow">RANKING QUALITY</p><h2>How do the results compare?</h2></div>
+        <p class="section-aside">The first chart compares this user’s rankings; the second shows macro-average evidence for model selection. Use the chronological test protocol for future-oriented offline selection.</p>
+      </div>
+      <div class="chart-grid">
+        <article class="chart-card">
+          <div class="chart-title"><div><span class="chart-kicker">SELECTED USER</span><h3>Per-user NDCG@10 by method</h3></div><span class="chart-unit">adaptive scale</span></div>
+          <div id="user-metrics-chart" class="chart-canvas"></div>
+          <p id="user-metrics-note" class="chart-note"></p>
+        </article>
+        <article class="chart-card">
+          <div class="chart-title"><div><span class="chart-kicker">AGGREGATE</span><h3>Model performance by split</h3></div><label class="compact-select">Metric <select id="metric-select"><option value="ndcg_at_10">NDCG@10</option><option value="precision_at_10">Precision@10</option><option value="recall_at_10">Recall@10</option></select></label></div>
+          <div id="global-metrics-chart" class="chart-canvas"></div>
+          <p class="chart-note">Macro-averages; compare scores within a split. Popularity is a strong full-catalogue reference.</p>
+        </article>
+      </div>
+      <aside class="selection-guidance">
+        <strong>Evidence-based choice</strong>
+        <p>Popularity is the strongest simple reference in these full-catalogue tests: test NDCG@10 is 0.04362 chronologically and 0.08235 randomly. The random split is not a future-time test; the corrected full-grid RMSE-selected hybrid reaches 0.07097, while the NDCG-selected hybrid reaches 0.08120.</p>
+      </aside>
+    </section>
+
+    <section class="section-block">
+      <div class="section-heading">
+        <div><p class="eyebrow">03 / VALIDATION DIAGNOSTIC</p><h2>Does blending help?</h2></div>
+        <p class="section-aside">The hybrid line is a validation sweep over per-user z-score fusion; its validation-selected alpha is evaluated once on test.</p>
+      </div>
+      <article class="chart-card wide-chart">
+        <div class="chart-title"><div><span class="chart-kicker">MF B + GENRE</span><h3>Validation NDCG@10 by MF weight</h3></div><span class="chart-unit">α = MF share</span></div>
+        <div id="hybrid-chart" class="chart-canvas"></div>
+        <p id="hybrid-caption" class="chart-note"></p>
+      </article>
+    </section>
+
+    <section class="section-block">
+      <div class="section-heading">
+        <div><p class="eyebrow">04 / SPLIT SENSITIVITY</p><h2>The split changes the question.</h2></div>
+        <p class="section-aside">Chronological evaluation approximates future recommendations. Random holdout can train on later ratings, so its higher scores are not a fair “improvement” over the chronological result.</p>
+      </div>
+      <div class="insight-grid">
+        <article class="insight-card"><span class="insight-number">A</span><h3>Chronological</h3><p>Train on earlier ratings, evaluate on later ratings. This is the primary, future-oriented protocol.</p></article>
+        <article class="insight-card"><span class="insight-number">B</span><h3>Random per-user</h3><p>Shuffle each user’s rows into 80/10/10. Training includes later timestamps for nearly every user, giving a different and usually easier information setting.</p></article>
+        <article class="insight-card"><span class="insight-number">C</span><h3>Read scores in context</h3><p>Compare the two rows above as different evaluation settings, not as evidence that random splitting is better for deployment.</p></article>
+      </div>
+      <div class="chart-card wide-chart history-card">
+        <div class="chart-title"><div><span class="chart-kicker">VALIDATION SUBGROUPS</span><h3>NDCG@10 by training-history length</h3></div><span id="history-caption" class="chart-unit"></span></div>
+        <div id="history-chart" class="chart-canvas"></div>
+        <p class="chart-note">Descriptive user-group averages; the chronological saved subgroup report contains genre results only.</p>
+      </div>
+    </section>
+
+    <section class="method-note">
+      <p class="eyebrow">HOW TO READ THE RESULTS</p>
+      <div class="method-columns">
+        <p><b>Scoring:</b> MF predicts a clipped 1–5 rating; Genre uses cosine similarity to a training-only, mean-centered genre profile; the hybrid combines per-user standardized MF B and genre scores.</p>
+        <p><b>Evaluation:</b> candidates exclude training-rated movies. A held-out rating ≥4 is relevant. Unrated recommendations are unknown—not confirmed negatives. The hybrid has no test metrics.</p>
+        <p><b>Reproducibility:</b> results come from the locked chronological split and a separate random split (seed 42). Data and model files are precomputed; this static site does not retrain.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><span>ES 678 · MovieLens 1M Recommendation Study</span><span>Static, precomputed comparison · GitHub Pages ready</span></footer>
+</body>
+</html>
